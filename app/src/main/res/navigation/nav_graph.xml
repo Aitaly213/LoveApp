@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/calculateFragment">
+
+    <fragment
+        android:id="@+id/calculateFragment"
+        android:name="com.example.loveapp.ui.fragments.CalculateFragment"
+        android:label="fragment_calculate"
+        tools:layout="@layout/fragment_calculate" >
+
+        <action
+            android:id="@+id/action_calculateFragment_to_resultFragment4"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.loveapp.ui.fragments.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result">
+
+
+        <argument
+            android:name="first_name"
+            android:defaultValue=" "
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="second_name"
+            app:argType="string"
+            app:nullable="false"
+            android:defaultValue=" " />
+        <argument
+            android:name="percentage"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="result"
+            app:argType="string"
+            android:defaultValue=" " />
+        <action
+            android:id="@+id/action_resultFragment_to_calculateFragment2"
+            app:destination="@id/calculateFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.loveapp.ui.fragments.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+
+</navigation>
