@@ -1,13 +1,14 @@
 package com.example.loveapp.data.network
 
+import com.example.loveapp.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://love-calculator.p.rapidapi.com/")
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    public val api = retrofit.create(ApiService::class.java)
+     val api = retrofit.create(ApiService::class.java)
 }

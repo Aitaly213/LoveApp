@@ -1,6 +1,7 @@
 package com.example.loveapp.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class LoveModel (
     @SerializedName("fname")
@@ -11,4 +12,4 @@ data class LoveModel (
     val percentage: String,
     @SerializedName("result")
     val result: String
-)
+): Serializable

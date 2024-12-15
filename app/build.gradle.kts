@@ -36,7 +36,23 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures.viewBinding = true
+    defaultConfig{
+        applicationId = "com.example.loveapp"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+
+        //consts
+        buildConfigField("String","API_KEY","\"11e7e1a9c9msh4bbfd5f88f3991bp10653bjsn6bd04c5d5ac2\"")
+        buildConfigField("String","HOST","\"love-calculator.p.rapidapi.com\"")
+        buildConfigField("String","BASE_URL","\"https://love-calculator.p.rapidapi.com/\"")
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {

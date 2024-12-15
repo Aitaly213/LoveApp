@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.loveapp.BuildConfig
 import com.example.loveapp.data.model.LoveModel
 import com.example.loveapp.data.network.RetrofitInstance
 import com.example.loveapp.databinding.FragmentCalculateBinding
@@ -16,16 +17,17 @@ import retrofit2.Response
 
 class CalculateFragment : Fragment() {
 
-    private val binding by lazy {
-        FragmentCalculateBinding.inflate(layoutInflater)
-    }
+    private var _binding :FragmentCalculateBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        return binding.root
+        _binding= FragmentCalculateBinding.inflate(inflater,container,false)
+        val view = binding.root
+        return view
     }
 
 
@@ -36,17 +38,16 @@ class CalculateFragment : Fragment() {
             RetrofitInstance.api.getPercentage(
                 binding.etFirstName.text.toString(),
                 binding.etSecondName.text.toString(),
-                KEY,
-                HOST
+                BuildConfig.API_KEY,
+                BuildConfig.HOST
             ).enqueue(object : Callback<LoveModel> {
                 override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
                     if (response.isSuccessful && response.body() != null) {
+                        binding.etFirstName.text.clear()
+                        binding.etSecondName.text.clear()
                         findNavController().navigate(
                             CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
-                                firstName = response.body()!!.firstName,
-                                secondName = response.body()!!.secondName,
-                                percentage = response.body()!!.percentage,
-                                result = response.body()!!.result
+                                loveModel = response.body()!!
                             )
                         )
                     }
@@ -59,9 +60,8 @@ class CalculateFragment : Fragment() {
         }
     }
 
-
-    companion object {
-        const val KEY = "11e7e1a9c9msh4bbfd5f88f3991bp10653bjsn6bd04c5d5ac2"
-        const val HOST = "love-calculator.p.rapidapi.com"
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
