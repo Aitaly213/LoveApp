@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 
     id("androidx.navigation.safeargs.kotlin")
+  //  id("com.google.devtools.ksp")
 }
 
 android {
@@ -70,9 +71,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.8.4")
 
-
+    //ui
     implementation(libs.androidx.cardview)
+
     //retrofit
     implementation(libs.retrofit)
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //room
+    implementation("androidx.room:room-ktx:2.6.1")
+   // ksp("androidx.room:room-compiler:2.6.1")
+
 }

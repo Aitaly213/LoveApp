@@ -1,8 +1,7 @@
 package com.example.loveapp
 
 import android.app.Application
-//import androidx.room.Room
-//import com.example.loveapp.data.local.AppDatabase
+
 
 class App : Application() {
 
@@ -16,7 +15,7 @@ class App : Application() {
       //  getInstance()
     }
 
-//    public fun getInstance(): AppDatabase? {
+//     private fun getInstance(): AppDatabase? {
 //        if (appDatabase == null){
 //            appDatabase = applicationContext?.let {
 //                Room.databaseBuilder(

@@ -1,15 +1,9 @@
-//package com.example.loveapp.data.local
-//
-//import androidx.lifecycle.LiveData
-//import androidx.room.Dao
-//import androidx.room.Delete
-//import androidx.room.Insert
-//import androidx.room.OnConflictStrategy
-//import androidx.room.Query
-//import com.example.loveapp.data.model.LoveModel
-//
+package com.example.loveapp.data.local
+
+import androidx.lifecycle.LiveData
+
 //@Dao
-//interface ResultDao {
+interface ResultDao {
 //
 //    @Query("SELECT * FROM loveModel")
 //    fun getAll(): LiveData<List<LoveModel>>
@@ -19,4 +13,4 @@
 //
 //    @Delete
 //    fun deleteNote(loveModel: LoveModel)
-//}
+}
