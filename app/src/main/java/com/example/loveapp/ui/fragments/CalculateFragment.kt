@@ -8,60 +8,62 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.loveapp.data.model.LoveModel
-import com.example.loveapp.data.network.RetrofitInstance
 import com.example.loveapp.databinding.FragmentCalculateBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.loveapp.presenter.CalculateFragmentPresenter
+import com.example.loveapp.presenter.CalculateView
 
-class CalculateFragment : Fragment() {
+class CalculateFragment : Fragment(), CalculateView {
 
-    private val binding by lazy {
-        FragmentCalculateBinding.inflate(layoutInflater)
-    }
+    private var _binding: FragmentCalculateBinding? = null
+    private val binding get() = _binding!!
+
+    private val presenter: CalculateFragmentPresenter = CalculateFragmentPresenter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        return binding.root
+        _binding = FragmentCalculateBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCalculate.setOnClickListener {
-            RetrofitInstance.api.getPercentage(
+            presenter.getPercentage(
                 binding.etFirstName.text.toString(),
-                binding.etSecondName.text.toString(),
-                KEY,
-                HOST
-            ).enqueue(object : Callback<LoveModel> {
-                override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
-                    if (response.isSuccessful && response.body() != null) {
-                        findNavController().navigate(
-                            CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
-                                firstName = response.body()!!.firstName,
-                                secondName = response.body()!!.secondName,
-                                percentage = response.body()!!.percentage,
-                                result = response.body()!!.result
-                            )
-                        )
-                    }
-                }
-
-                override fun onFailure(call: Call<LoveModel>, t: Throwable) {
-                    Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
-                }
-            })
+                binding.etSecondName.text.toString()
+            )
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-    companion object {
-        const val KEY = "11e7e1a9c9msh4bbfd5f88f3991bp10653bjsn6bd04c5d5ac2"
-        const val HOST = "love-calculator.p.rapidapi.com"
+    override fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun navigateToResult(loveModel: LoveModel) {
+        binding.etFirstName.text.clear()
+        binding.etSecondName.text.clear()
+        findNavController().navigate(
+            CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
+                loveModel = loveModel
+            )
+        )
+    }
+
+    override fun showLoading() {
+        binding.pbCalculate.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        binding.pbCalculate.visibility = View.GONE
     }
 }

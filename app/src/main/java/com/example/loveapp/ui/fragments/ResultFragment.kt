@@ -11,9 +11,8 @@ import com.example.loveapp.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
-    private val binding by lazy {
-        FragmentResultBinding.inflate(layoutInflater)
-    }
+    private var _binding: FragmentResultBinding? = null
+    private val binding get() = _binding!!
 
     private val args: ResultFragmentArgs by navArgs()
 
@@ -22,6 +21,7 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        _binding = FragmentResultBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -34,15 +34,19 @@ class ResultFragment : Fragment() {
 
     private fun setupListener() {
         binding.btnTryAgain.setOnClickListener {
-            findNavController().navigate(ResultFragmentDirections.actionResultFragmentToCalculateFragment2())
+            findNavController().navigateUp()
         }
     }
 
     private fun init() {
-        binding.tvFirstName.text = args.firstName
-        binding.tvSecondName.text = args.secondName
-        binding.tvLovePercentage.text = "${args.percentage}%"
-        binding.tvLoveResult.text = args.result
+
+        args.loveModel.apply {
+            binding.tvFirstName.text = firstName
+            binding.tvSecondName.text = secondName
+            binding.tvLovePercentage.text = "${percentage}%"
+            binding.tvLoveResult.text = result
+        }
+
     }
 
 

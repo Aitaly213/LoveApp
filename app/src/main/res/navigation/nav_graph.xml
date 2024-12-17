@@ -25,23 +25,9 @@
 
 
         <argument
-            android:name="first_name"
-            android:defaultValue=" "
-            app:argType="string"
-            app:nullable="false"/>
-        <argument
-            android:name="second_name"
-            app:argType="string"
-            app:nullable="false"
-            android:defaultValue=" " />
-        <argument
-            android:name="percentage"
-            app:argType="string"
-            android:defaultValue=" " />
-        <argument
-            android:name="result"
-            app:argType="string"
-            android:defaultValue=" " />
+            android:name="love_model"
+            app:argType="com.example.loveapp.data.model.LoveModel"/>
+
         <action
             android:id="@+id/action_resultFragment_to_calculateFragment2"
             app:destination="@id/calculateFragment" />
