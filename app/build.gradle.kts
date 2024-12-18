@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 
     id("androidx.navigation.safeargs.kotlin")
-  //  id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -80,6 +80,6 @@ dependencies {
 
     //room
     implementation("androidx.room:room-ktx:2.6.1")
-   // ksp("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
 }

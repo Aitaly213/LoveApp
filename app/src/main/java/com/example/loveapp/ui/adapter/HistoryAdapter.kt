@@ -1,4 +1,4 @@
-package com.example.loveapp.ui.fragments
+package com.example.loveapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loveapp.data.model.LoveModel
-import com.example.loveapp.databinding.FragmentHistoryBinding
 import com.example.loveapp.databinding.ItemHistoryBinding
 
 class HistoryAdapter() : ListAdapter<LoveModel, HistoryAdapter.ViewHolder>(DiffUtilComeback()) {
@@ -15,14 +14,12 @@ class HistoryAdapter() : ListAdapter<LoveModel, HistoryAdapter.ViewHolder>(DiffU
         fun onBind(loveModel: LoveModel) {
             binding.tvFirstName.text = loveModel.firstName
             binding.tvSecondName.text = loveModel.secondName
-            binding.tvPercentage.text = loveModel.percentage
+            binding.tvPercentage.text = "${loveModel.percentage}%"
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding by lazy {
-            ItemHistoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        }
+        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
 
