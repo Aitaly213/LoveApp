@@ -1,5 +1,6 @@
 package com.example.loveapp.presenter
 
+import com.example.loveapp.App
 import com.example.loveapp.BuildConfig
 import com.example.loveapp.data.model.LoveModel
 import com.example.loveapp.data.network.RetrofitInstance
@@ -19,6 +20,9 @@ class CalculateFragmentPresenter(private val view: CalculateView) {
        ).enqueue(object : Callback<LoveModel>{
            override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
                if (response.isSuccessful && response.body() != null) {
+
+                   App().getInstance()?.resultDao()?.insertNote(response.body()!!)
+
                    view.navigateToResult(response.body()!!)
                    view.hideLoading()
                }
@@ -30,6 +34,4 @@ class CalculateFragmentPresenter(private val view: CalculateView) {
 
        })
    }
-
-
 }

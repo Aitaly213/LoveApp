@@ -33,6 +33,7 @@ class CalculateFragment : Fragment(), CalculateView {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCalculate.setOnClickListener {
+
             presenter.getPercentage(
                 binding.etFirstName.text.toString(),
                 binding.etSecondName.text.toString()
@@ -64,6 +65,6 @@ class CalculateFragment : Fragment(), CalculateView {
     }
 
     override fun hideLoading() {
-        binding.pbCalculate.visibility = View.GONE
+        binding.pbCalculate.visibility = View.INVISIBLE
     }
 }
