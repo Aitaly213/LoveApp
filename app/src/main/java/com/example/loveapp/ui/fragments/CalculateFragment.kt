@@ -48,16 +48,18 @@ class CalculateFragment : Fragment() {
                 if (result != null) {
                     binding.etFirstName.text.clear()
                     binding.etSecondName.text.clear()
+                    result.apply {
                     findNavController().navigate(
                         CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
                             LoveModel(
-                                result.firstName,
-                                result.secondName,
-                                result.percentage,
+                                firstName,
+                                secondName,
+                                percentage,
                                 result.result
                             )
                         )
                     )
+                    }
                 }
             }
 
