@@ -17,11 +17,11 @@ class LoveViewModel : ViewModel() {
     val loveResult: LiveData<LoveModel?> get() = _loveResult
 
     private val _error = MutableLiveData<String>()
-    val error:LiveData<String> get() = _error
+    val error: LiveData<String> get() = _error
 
     var loadingProgressBar = MutableLiveData<Boolean>()
 
-    fun getPercentage(firstName: String,secondName: String){
+    fun getPercentage(firstName: String, secondName: String) {
 
         _loveResult.value = null
         loadingProgressBar.value = true
@@ -36,7 +36,7 @@ class LoveViewModel : ViewModel() {
 
                 if (response.isSuccessful && response.body() != null) {
                     App.appDatabase?.resultDao()?.insertNote(response.body()!!)
-                    _loveResult.value= response.body()
+                    _loveResult.value = response.body()
                     loadingProgressBar.value = false
                 }
             }

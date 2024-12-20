@@ -30,7 +30,6 @@ class ResultFragment : Fragment() {
 
         init()
         setupListener()
-       // sendDataToRoom()
     }
 
     private fun setupListener() {
