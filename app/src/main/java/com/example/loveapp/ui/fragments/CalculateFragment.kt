@@ -6,18 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.loveapp.data.model.LoveModel
 import com.example.loveapp.databinding.FragmentCalculateBinding
-import com.example.loveapp.presenter.CalculateFragmentPresenter
-import com.example.loveapp.presenter.CalculateView
+import com.example.loveapp.ui.viewmodels.LoveViewModel
 
-class CalculateFragment : Fragment(), CalculateView {
+class CalculateFragment : Fragment() {
 
     private var _binding: FragmentCalculateBinding? = null
     private val binding get() = _binding!!
 
-    private val presenter: CalculateFragmentPresenter = CalculateFragmentPresenter(this)
+    private val viewModel by lazy {
+        ViewModelProvider(this)[LoveViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,39 +34,47 @@ class CalculateFragment : Fragment(), CalculateView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnCalculate.setOnClickListener {
+        setupListeners()
+    }
 
-            presenter.getPercentage(
+    private fun setupListeners() {
+        binding.btnCalculate.setOnClickListener {
+            viewModel.getPercentage(
                 binding.etFirstName.text.toString(),
                 binding.etSecondName.text.toString()
             )
+
+            viewModel.loveResult.observe(viewLifecycleOwner) { result ->
+                if (result != null) {
+                    binding.etFirstName.text.clear()
+                    binding.etSecondName.text.clear()
+                    findNavController().navigate(
+                        CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
+                            LoveModel(
+                                result.firstName,
+                                result.secondName,
+                                result.percentage,
+                                result.result
+                            )
+                        )
+                    )
+                }
+            }
+
+            viewModel.error.observe(viewLifecycleOwner) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            }
+
+            viewModel.loadingProgressBar.observe(viewLifecycleOwner) {
+                if (it) binding.pbCalculate.visibility = View.VISIBLE
+            }
         }
+
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun navigateToResult(loveModel: LoveModel) {
-        binding.etFirstName.text.clear()
-        binding.etSecondName.text.clear()
-        findNavController().navigate(
-            CalculateFragmentDirections.actionCalculateFragmentToResultFragment4(
-                loveModel = loveModel
-            )
-        )
-    }
-
-    override fun showLoading() {
-        binding.pbCalculate.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        binding.pbCalculate.visibility = View.INVISIBLE
     }
 }

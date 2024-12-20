@@ -39,11 +39,6 @@ class ResultFragment : Fragment() {
         binding.btnTryAgain.setOnClickListener {
             findNavController().navigateUp()
         }
-//        args.loveModel.apply {
-//            binding.btnSave.setOnClickListener {
-//                App.appDatabase?.resultDao()?.insertNote(LoveModel(firstName,secondName,percentage,result))
-//            }
-//        }
     }
 
     private fun init() {
